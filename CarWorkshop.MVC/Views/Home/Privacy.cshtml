@@ -1,0 +1,61 @@
+﻿@model List<Person>
+
+@{
+    ViewData["Title"] = "Privacy Policy";
+    var currentYear = DateTime.Now.Year;
+    var dayOfWeek = DateTime.Now.DayOfWeek;
+    var email = "support@supprot.com";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to detail your site's privacy policy.</p>
+<p>It is @currentYear :) </p>
+
+@if(dayOfWeek==DayOfWeek.Sunday||dayOfWeek==DayOfWeek.Saturday){
+    <p>It's wekkend</p>
+}
+else
+{
+    <p>Not yet the weekend :(</p>
+}
+
+@*break w switch spowoduje, że plik Razor dalej się wykona*@
+@switch(dayOfWeek)
+{
+    case DayOfWeek.Thursday:
+        <p>It's Thursday :)</p>
+        break;
+    default:
+        <p>It's Thursday :(</p>
+        break;
+}
+<p>Test 1</p>
+
+@*Razor poprawnie rozpoznaje znak @ w zależności od kontekstu*@
+<a href="mailto:support@support.com">support@support.com</a>
+<br />
+<a href="mailto:support@support.com">@email</a>
+<br />
+<a href="mailto:@email">support@support.com</a>
+<br />
+<br />
+
+@*Iteracja po liście przekazanej z kontrolera*@
+<p>FirstName | LastName</p>
+@foreach(var person in Model)
+{
+    <p>@person.FirstName | @person.LastName</p>
+}
+
+@*return w switch spowoduje, że plik Razor dalej się nie wykona*@
+@switch(dayOfWeek)
+{
+    case DayOfWeek.Thursday:
+        <p>It's Thursday :)</p>
+        return;
+    default:
+        <p>It's Thursday :(</p>
+        return;
+}
+<p>Test 2</p>
